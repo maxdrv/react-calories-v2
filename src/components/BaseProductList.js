@@ -16,7 +16,7 @@ class BaseProductList extends Component {
         axios.get("http://localhost:8080/baseProducts")
             .then(response => {
                 this.setState({
-                    baseProducts: response.data
+                    baseProducts: response.data.content
                 })
             })
             .catch(error => {
