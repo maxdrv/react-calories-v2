@@ -8,33 +8,34 @@ class CreateBaseProductForm extends Component {
 
         this.state = {
             name: "",
-            nutrients: {
-                kcal: 0,
-                proteins: 0,
-                fats: 0,
-                carbs: 0
-            }
+            kcal: 0,
+            proteins: 0,
+            fats: 0,
+            carbs: 0
         }
     }
 
     changeHandler = (event) => {
-        if (event.target.name === "name") {
-            this.setState({
-                    [event.target.name]: event.target.value
-                }
-            );
-        } else {
-            this.setState({
-                nutrients: {
-                    [event.target.name]: event.target.value
-                }
-            });
-        }
+        this.setState({
+                [event.target.name]: event.target.value
+            }
+        );
     }
 
     submitHandler = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:8080/baseProducts", this.state)
+
+        const req = {
+            name: this.state.name,
+            nutrients: {
+                kcal: this.state.kcal,
+                proteins: this.state.proteins,
+                fats: this.state.fats,
+                carbs: this.state.carbs
+            }
+        }
+
+        axios.post("http://localhost:8080/baseProducts", req)
             .then(response => {
                 console.log(response)
             })
@@ -44,8 +45,7 @@ class CreateBaseProductForm extends Component {
     }
 
     render() {
-        const {name} = this.state;
-        const {kcal, proteins, fats, carbs} = this.state.nutrients
+        const {name, kcal, proteins, fats, carbs} = this.state
         return (
             <div>
                 <form onSubmit={this.submitHandler}>

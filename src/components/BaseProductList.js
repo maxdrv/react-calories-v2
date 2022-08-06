@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
+import BaseProduct from "./BaseProduct";
 
 class BaseProductList extends Component {
 
@@ -30,11 +31,25 @@ class BaseProductList extends Component {
         const {baseProducts, errorMsg} = this.state
         return (
             <div>
-                {
-                    baseProducts.length ?
-                        baseProducts.map(product => <div>{product.name}</div>) :
-                        null
-                }
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>kcal</th>
+                            <th>proteins</th>
+                            <th>fats</th>
+                            <th>carbs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        baseProducts.length ?
+                            baseProducts.map(product => <BaseProduct key={product.id} id={product.id} name={product.name} nutrients={product.nutrients} />) :
+                            null
+                    }
+                    </tbody>
+                </table>
                 { errorMsg ? <div>{errorMsg}</div> : null}
             </div>
         );
