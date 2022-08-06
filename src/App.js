@@ -1,12 +1,10 @@
 import './App.css';
-import BaseProductTable from "./components/BaseProductTable";
-import CreateBaseProductForm from "./components/CreateBaseProductForm";
+import BaseProductPage from "./components/BaseProductPage";
 
 function App() {
   return (
     <div className="App">
-      <CreateBaseProductForm/>
-      <BaseProductTable/>
+        <BaseProductPage/>
     </div>
   );
 }

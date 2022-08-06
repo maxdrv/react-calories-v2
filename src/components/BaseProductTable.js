@@ -1,34 +1,10 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import BaseProduct from "./BaseProduct";
 
 class BaseProductTable extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-
-        this.state = {
-            baseProducts: [],
-            errorMsg: null
-        }
-    }
-
-    componentDidMount() {
-        axios.get("http://localhost:8080/baseProducts")
-            .then(response => {
-                this.setState({
-                    baseProducts: response.data.content
-                })
-            })
-            .catch(error => {
-                this.setState({
-                    errorMsg: 'Error while fetching data'
-                })
-            })
-    }
-
     render() {
-        const {baseProducts, errorMsg} = this.state
+        const {baseProducts} = this.props;
         return (
             <div>
                 <table className={'base-product-table'}>
@@ -50,7 +26,6 @@ class BaseProductTable extends Component {
                     }
                     </tbody>
                 </table>
-                { errorMsg ? <div>{errorMsg}</div> : null}
             </div>
         );
     }
