@@ -38,10 +38,15 @@ class CreateBaseProductForm extends Component {
         axios.post("http://localhost:8080/baseProducts", req)
             .then(response => {
                 console.log(response)
+                this.refreshPage();
             })
             .catch(error => {
                 console.log(error)
             })
+    }
+
+    refreshPage() {
+        window.location.reload();
     }
 
     render() {
