@@ -1,12 +1,12 @@
 import './App.css';
-import BaseProductList from "./components/BaseProductList";
+import BaseProductTable from "./components/BaseProductTable";
 import CreateBaseProductForm from "./components/CreateBaseProductForm";
 
 function App() {
   return (
     <div className="App">
       <CreateBaseProductForm/>
-      <BaseProductList/>
+      <BaseProductTable/>
     </div>
   );
 }

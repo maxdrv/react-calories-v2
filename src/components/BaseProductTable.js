@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios";
 import BaseProduct from "./BaseProduct";
 
-class BaseProductList extends Component {
+class BaseProductTable extends Component {
 
     constructor(props, context) {
         super(props, context);
@@ -31,7 +31,7 @@ class BaseProductList extends Component {
         const {baseProducts, errorMsg} = this.state
         return (
             <div>
-                <table>
+                <table className={'base-product-table'}>
                     <thead>
                         <tr>
                             <th>id</th>
@@ -56,4 +56,4 @@ class BaseProductList extends Component {
     }
 }
 
-export default BaseProductList;
+export default BaseProductTable;

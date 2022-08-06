@@ -6,12 +6,12 @@ class BaseProduct extends Component {
         const {id, name, nutrients} = this.props;
         return (
             <tr>
-                <td>{id}</td>
-                <td>{name}</td>
-                <td>{nutrients.kcal}</td>
-                <td>{nutrients.proteins}</td>
-                <td>{nutrients.fats}</td>
-                <td>{nutrients.carbs}</td>
+                <td className={'width-10'}>{id}</td>
+                <td className={'width-30'}>{name}</td>
+                <td className={'width-15'}>{nutrients.kcal}</td>
+                <td className={'width-15'}>{nutrients.proteins}</td>
+                <td className={'width-15'}>{nutrients.fats}</td>
+                <td className={'width-15'}>{nutrients.carbs}</td>
             </tr>
         );
     }

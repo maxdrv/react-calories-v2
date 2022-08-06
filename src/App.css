@@ -37,7 +37,28 @@
   }
 }
 
-table, th, td {
-  border: 1px solid black;
+.base-product-table {
   border-collapse: collapse;
+  border: 1px solid lightgray;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, .15);
+  width: 50em;
+  background-color: #ffffff;
+  margin: 25px auto;
+}
+
+.base-product-table thead th,
+.base-product-table tbody td {
+  border: 1px solid lightgray;
+}
+
+.width-10 {
+  width: 10%;
+}
+
+.width-15 {
+  width: 15%;
+}
+
+.width-30 {
+  width: 30%;
 }
