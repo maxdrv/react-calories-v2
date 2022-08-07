@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CreateBaseProductForm from "./CreateBaseProductForm";
-import BaseProductTable from "./BaseProductTable";
 import axios from "axios";
+import BaseProductRowReadOnly from "./BaseProductRowReadOnly";
 
 class BaseProductPage extends Component {
 
@@ -33,7 +33,25 @@ class BaseProductPage extends Component {
         return (
             <div>
                 <CreateBaseProductForm/>
-                <BaseProductTable baseProducts={baseProducts}/>
+                <table className={'base-product-table'}>
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>kcal</th>
+                        <th>proteins</th>
+                        <th>fats</th>
+                        <th>carbs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        baseProducts.length ?
+                            baseProducts.map(product => <BaseProductRowReadOnly key={product.id} id={product.id} name={product.name} nutrients={product.nutrients} />) :
+                            null
+                    }
+                    </tbody>
+                </table>
                 { errorMsg ? <div>{errorMsg}</div> : null}
             </div>
         );
