@@ -66,6 +66,18 @@ class BaseProductPage extends Component {
         })
     }
 
+    handleEditFormChange = (event) => {
+        event.preventDefault();
+
+        const fieldName = event.target.name
+        const fieldValue = event.target.value
+
+        this.setState(prevState => {
+            prevState.editFormData[fieldName] = fieldValue;
+            return prevState
+        });
+    }
+
     handleSubmitEditForm = (event) => {
         event.preventDefault();
 
@@ -123,6 +135,7 @@ class BaseProductPage extends Component {
                                                 editBaseProductId === product.id ?
                                                     <BaseProductRowEditable
                                                         editFormData={this.state.editFormData}
+                                                        handleEditFormChange={this.handleEditFormChange}
                                                         handleCancelClick={this.handleCancelClick}
                                                     /> :
                                                     <BaseProductRowReadOnly
