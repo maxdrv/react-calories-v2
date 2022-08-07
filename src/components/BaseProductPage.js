@@ -116,7 +116,7 @@ class BaseProductPage extends Component {
         const {baseProducts, errorMsg, editBaseProductId} = this.state;
         return (
             <div>
-                <CreateBaseProductForm/>
+                <CreateBaseProductForm refreshPage={this.refreshPage}/>
                 <form onSubmit={this.handleSubmitEditForm}>
                     <table className={'base-product-table'}>
                         <thead>
