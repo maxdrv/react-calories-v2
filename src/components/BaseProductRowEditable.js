@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 class BaseProductRowEditable extends Component {
     render() {
+        const {handleCancelClick} = this.props;
         return (
             <tr>
                 <td className={'width-10'}>
@@ -23,7 +24,7 @@ class BaseProductRowEditable extends Component {
                     <input type='text' required='required' name='carbs'/>
                 </td>
                 <td className={'width-20'}>
-
+                    <button type='button' onClick={handleCancelClick}>Cancel</button>
                 </td>
             </tr>
         );

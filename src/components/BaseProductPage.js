@@ -34,8 +34,15 @@ class BaseProductPage extends Component {
         event.preventDefault();
 
         this.setState(prevState => {
-            prevState['editBaseProductId'] = baseProductId
-            return prevState
+            prevState['editBaseProductId'] = baseProductId;
+            return prevState;
+        })
+    }
+
+    handleCancelClick = (event) => {
+        this.setState(prevState => {
+            prevState['editBaseProductId'] = null;
+            return prevState;
         })
     }
 
@@ -64,7 +71,7 @@ class BaseProductPage extends Component {
                                     <Fragment>
                                         {
                                             editBaseProductId === product.id ?
-                                                <BaseProductRowEditable/> :
+                                                <BaseProductRowEditable handleCancelClick={this.handleCancelClick}/> :
                                                 <BaseProductRowReadOnly
                                                     key={product.id}
                                                     id={product.id}
