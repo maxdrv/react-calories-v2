@@ -12,7 +12,15 @@ class BaseProductPage extends Component {
         this.state = {
             baseProducts: [],
             errorMsg: null,
-            editBaseProductId: null
+            editBaseProductId: null,
+            editFormData: {
+                id: -1,
+                name: "",
+                kcal: 0,
+                proteins: 0,
+                fats: 0,
+                carbs: 0
+            }
         }
     }
 
@@ -30,13 +38,25 @@ class BaseProductPage extends Component {
             })
     }
 
-    handleEditClick = (event, baseProductId) => {
+    handleEditClick = (event, product) => {
         event.preventDefault();
 
         this.setState(prevState => {
-            prevState['editBaseProductId'] = baseProductId;
+            prevState['editBaseProductId'] = product.id;
+
+            prevState['editFormData'] = {
+                id: product.id,
+                name: product.name,
+                kcal: product.nutrients.kcal,
+                proteins: product.nutrients.proteins,
+                fats: product.nutrients.fats,
+                carbs: product.nutrients.carbs
+            }
+
             return prevState;
         })
+
+
     }
 
     handleCancelClick = (event) => {
@@ -71,12 +91,13 @@ class BaseProductPage extends Component {
                                     <Fragment>
                                         {
                                             editBaseProductId === product.id ?
-                                                <BaseProductRowEditable handleCancelClick={this.handleCancelClick}/> :
+                                                <BaseProductRowEditable
+                                                    editFormData={this.state.editFormData}
+                                                    handleCancelClick={this.handleCancelClick}
+                                                /> :
                                                 <BaseProductRowReadOnly
                                                     key={product.id}
-                                                    id={product.id}
-                                                    name={product.name}
-                                                    nutrients={product.nutrients}
+                                                    product={product}
                                                     handleEditClick={this.handleEditClick}
                                                 />
                                         }
