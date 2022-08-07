@@ -8,6 +8,8 @@ class BaseProductPage extends Component {
     constructor(props, context) {
         super(props, context);
 
+        this.path = "http://localhost:8080/baseProducts";
+
         this.state = {
             baseProducts: [],
             errorMsg: null,
@@ -31,7 +33,7 @@ class BaseProductPage extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:8080/baseProducts")
+        axios.get(this.path)
             .then(response => {
                 this.setState({
                     baseProducts: response.data.content
@@ -97,7 +99,7 @@ class BaseProductPage extends Component {
             }
         }
 
-        axios.post("http://localhost:8080/baseProducts", req)
+        axios.post(this.path, req)
             .then(response => {
                 console.log(response)
                 this.refreshPage();
@@ -134,7 +136,7 @@ class BaseProductPage extends Component {
             }
         }
 
-        axios.put(`http://localhost:8080/baseProducts/${productId}`, req)
+        axios.put(`${this.path}/${productId}`, req)
             .then(response => {
                 console.log(response)
                 this.refreshPage();
@@ -152,7 +154,7 @@ class BaseProductPage extends Component {
     handleDeleteClick = (event, productId) => {
         event.preventDefault();
 
-        axios.delete(`http://localhost:8080/baseProducts/${productId}`)
+        axios.delete(`${this.path}/${productId}`)
             .then(response => {
                 console.log(response)
                 this.refreshPage();
