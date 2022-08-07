@@ -135,7 +135,7 @@ class BaseProductPage extends Component {
                             baseProducts.length ?
                                 baseProducts.map(product => {
                                     return (
-                                        <Fragment>
+                                        <Fragment key={product.id}>
                                             {
                                                 editBaseProductId === product.id ?
                                                     <BaseProductRowEditable
@@ -144,7 +144,6 @@ class BaseProductPage extends Component {
                                                         handleCancelClick={this.handleCancelClick}
                                                     /> :
                                                     <BaseProductRowReadOnly
-                                                        key={product.id}
                                                         product={product}
                                                         handleEditClick={this.handleEditClick}
                                                     />
