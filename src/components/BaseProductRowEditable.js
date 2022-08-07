@@ -6,7 +6,7 @@ class BaseProductRowEditable extends Component {
         return (
             <tr>
                 <td className={'width-10'}>
-                    <input type='text' required='required' name='id'/>
+
                 </td>
                 <td className={'width-30'}>
                     <input type='text' required='required' name='name'/>
