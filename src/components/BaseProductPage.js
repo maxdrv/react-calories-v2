@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import CreateBaseProductForm from "./CreateBaseProductForm";
 import axios from "axios";
 import BaseProductRowReadOnly from "./BaseProductRowReadOnly";
 import BaseProductRowEditable from "./BaseProductRowEditable";
@@ -13,6 +12,13 @@ class BaseProductPage extends Component {
             baseProducts: [],
             errorMsg: null,
             editBaseProductId: null,
+            addFormData: {
+                name: "",
+                kcal: 0,
+                proteins: 0,
+                fats: 0,
+                carbs: 0
+            },
             editFormData: {
                 id: -1,
                 name: "",
@@ -64,6 +70,41 @@ class BaseProductPage extends Component {
             prevState['editBaseProductId'] = null;
             return prevState;
         })
+    }
+
+    handleAddFormChange = (event) => {
+        event.preventDefault();
+
+        const fieldName = event.target.name
+        const fieldValue = event.target.value
+
+        this.setState(prevState => {
+            prevState.addFormData[fieldName] = fieldValue;
+            return prevState;
+        });
+    }
+
+    handleSubmitAddForm = (event) => {
+        event.preventDefault();
+
+        const req = {
+            name: this.state.addFormData.name,
+            nutrients: {
+                kcal: this.state.addFormData.kcal,
+                proteins: this.state.addFormData.proteins,
+                fats: this.state.addFormData.fats,
+                carbs: this.state.addFormData.carbs
+            }
+        }
+
+        axios.post("http://localhost:8080/baseProducts", req)
+            .then(response => {
+                console.log(response)
+                this.refreshPage();
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     handleEditFormChange = (event) => {
@@ -126,10 +167,19 @@ class BaseProductPage extends Component {
     }
 
     render() {
-        const {baseProducts, errorMsg, editBaseProductId} = this.state;
+        const {baseProducts, errorMsg, editBaseProductId, addFormData} = this.state;
         return (
             <div>
-                <CreateBaseProductForm refreshPage={this.refreshPage}/>
+                <div>
+                    <form onSubmit={this.handleSubmitAddForm}>
+                        <input type='text' name='name' value={addFormData.name} onChange={this.handleAddFormChange}/>
+                        <input type='text' name='kcal' value={addFormData.kcal} onChange={this.handleAddFormChange}/>
+                        <input type='text' name='proteins' value={addFormData.proteins} onChange={this.handleAddFormChange}/>
+                        <input type='text' name='fats' value={addFormData.fats} onChange={this.handleAddFormChange}/>
+                        <input type='text' name='carbs' value={addFormData.carbs} onChange={this.handleAddFormChange}/>
+                        <button type='submit'>Submit</button>
+                    </form>
+                </div>
                 <form onSubmit={this.handleSubmitEditForm}>
                     <table className={'base-product-table'}>
                         <thead>
