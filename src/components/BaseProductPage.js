@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import CreateBaseProductForm from "./CreateBaseProductForm";
 import axios from "axios";
 import BaseProductRowReadOnly from "./BaseProductRowReadOnly";
+import BaseProductRowEditable from "./BaseProductRowEditable";
 
 class BaseProductPage extends Component {
 
@@ -10,7 +11,8 @@ class BaseProductPage extends Component {
 
         this.state = {
             baseProducts: [],
-            errorMsg: null
+            errorMsg: null,
+            editBaseProductId: null
         }
     }
 
@@ -29,7 +31,7 @@ class BaseProductPage extends Component {
     }
 
     render() {
-        const {baseProducts, errorMsg} = this.state;
+        const {baseProducts, errorMsg, editBaseProductId} = this.state;
         return (
             <div>
                 <CreateBaseProductForm/>
@@ -47,7 +49,17 @@ class BaseProductPage extends Component {
                     <tbody>
                     {
                         baseProducts.length ?
-                            baseProducts.map(product => <BaseProductRowReadOnly key={product.id} id={product.id} name={product.name} nutrients={product.nutrients} />) :
+                            baseProducts.map(product => {
+                                return (
+                                    <Fragment>
+                                        {
+                                            editBaseProductId === product.id ?
+                                                <BaseProductRowEditable/> :
+                                                <BaseProductRowReadOnly key={product.id} id={product.id} name={product.name} nutrients={product.nutrients} />
+                                        }
+                                    </Fragment>
+                                )
+                            }) :
                             null
                     }
                     </tbody>
