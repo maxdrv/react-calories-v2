@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BaseProduct from "./BaseProduct";
+import BaseProductRowReadOnly from "./BaseProductRowReadOnly";
 
 class BaseProductTable extends Component {
 
@@ -21,7 +21,7 @@ class BaseProductTable extends Component {
                     <tbody>
                     {
                         baseProducts.length ?
-                            baseProducts.map(product => <BaseProduct key={product.id} id={product.id} name={product.name} nutrients={product.nutrients} />) :
+                            baseProducts.map(product => <BaseProductRowReadOnly key={product.id} id={product.id} name={product.name} nutrients={product.nutrients} />) :
                             null
                     }
                     </tbody>

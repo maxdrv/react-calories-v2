@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class BaseProduct extends Component {
+class BaseProductRowReadOnly extends Component {
 
     render() {
         const {id, name, nutrients} = this.props;
@@ -17,4 +17,4 @@ class BaseProduct extends Component {
     }
 }
 
-export default BaseProduct;
+export default BaseProductRowReadOnly;
