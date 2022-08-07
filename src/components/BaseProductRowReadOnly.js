@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class BaseProductRowReadOnly extends Component {
 
     render() {
-        const {product, handleEditClick} = this.props;
+        const {product, handleEditClick, handleDeleteClick} = this.props;
         return (
             <tr>
                 <td className={'width-10'}>{product.id}</td>
@@ -14,6 +14,7 @@ class BaseProductRowReadOnly extends Component {
                 <td className={'width-10'}>{product.nutrients.carbs}</td>
                 <td className={'width-20'}>
                     <button type='button' onClick={(event) => handleEditClick(event, product)}>Edit</button>
+                    <button type='button' onClick={(event) => handleDeleteClick(event, product.id)}>Delete</button>
                 </td>
             </tr>
         );

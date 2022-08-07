@@ -108,6 +108,19 @@ class BaseProductPage extends Component {
         })
     }
 
+    handleDeleteClick = (event, productId) => {
+        event.preventDefault();
+
+        axios.delete(`http://localhost:8080/baseProducts/${productId}`)
+            .then(response => {
+                console.log(response)
+                this.refreshPage();
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
     refreshPage = () => {
         window.location.reload();
     }
@@ -146,6 +159,7 @@ class BaseProductPage extends Component {
                                                     <BaseProductRowReadOnly
                                                         product={product}
                                                         handleEditClick={this.handleEditClick}
+                                                        handleDeleteClick={this.handleDeleteClick}
                                                     />
                                             }
                                         </Fragment>
