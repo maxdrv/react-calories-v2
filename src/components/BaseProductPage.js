@@ -101,6 +101,11 @@ class BaseProductPage extends Component {
             .catch(error => {
                 console.log(error)
             })
+
+        this.setState(prevState => {
+            prevState.editBaseProductId = null;
+            return prevState;
+        })
     }
 
     refreshPage = () => {
