@@ -30,6 +30,15 @@ class BaseProductPage extends Component {
             })
     }
 
+    handleEditClick = (event, baseProductId) => {
+        event.preventDefault();
+
+        this.setState(prevState => {
+            prevState['editBaseProductId'] = baseProductId
+            return prevState
+        })
+    }
+
     render() {
         const {baseProducts, errorMsg, editBaseProductId} = this.state;
         return (
@@ -44,6 +53,7 @@ class BaseProductPage extends Component {
                         <th>proteins</th>
                         <th>fats</th>
                         <th>carbs</th>
+                        <th>actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,7 +65,13 @@ class BaseProductPage extends Component {
                                         {
                                             editBaseProductId === product.id ?
                                                 <BaseProductRowEditable/> :
-                                                <BaseProductRowReadOnly key={product.id} id={product.id} name={product.name} nutrients={product.nutrients} />
+                                                <BaseProductRowReadOnly
+                                                    key={product.id}
+                                                    id={product.id}
+                                                    name={product.name}
+                                                    nutrients={product.nutrients}
+                                                    handleEditClick={this.handleEditClick}
+                                                />
                                         }
                                     </Fragment>
                                 )
