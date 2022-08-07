@@ -55,15 +55,44 @@ class BaseProductPage extends Component {
 
             return prevState;
         })
-
-
     }
 
     handleCancelClick = (event) => {
+        event.preventDefault();
+
         this.setState(prevState => {
             prevState['editBaseProductId'] = null;
             return prevState;
         })
+    }
+
+    handleSubmitEditForm = (event) => {
+        event.preventDefault();
+
+        const productId = this.state.editBaseProductId;
+
+        const req = {
+            name: this.state.editFormData.name,
+            nutrients: {
+                kcal: this.state.editFormData.kcal,
+                proteins: this.state.editFormData.proteins,
+                fats: this.state.editFormData.fats,
+                carbs: this.state.editFormData.carbs
+            }
+        }
+
+        axios.put(`http://localhost:8080/baseProducts/${productId}`, req)
+            .then(response => {
+                console.log(response)
+                this.refreshPage();
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    refreshPage = () => {
+        window.location.reload();
     }
 
     render() {
@@ -71,43 +100,45 @@ class BaseProductPage extends Component {
         return (
             <div>
                 <CreateBaseProductForm/>
-                <table className={'base-product-table'}>
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>kcal</th>
-                        <th>proteins</th>
-                        <th>fats</th>
-                        <th>carbs</th>
-                        <th>actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        baseProducts.length ?
-                            baseProducts.map(product => {
-                                return (
-                                    <Fragment>
-                                        {
-                                            editBaseProductId === product.id ?
-                                                <BaseProductRowEditable
-                                                    editFormData={this.state.editFormData}
-                                                    handleCancelClick={this.handleCancelClick}
-                                                /> :
-                                                <BaseProductRowReadOnly
-                                                    key={product.id}
-                                                    product={product}
-                                                    handleEditClick={this.handleEditClick}
-                                                />
-                                        }
-                                    </Fragment>
-                                )
-                            }) :
-                            null
-                    }
-                    </tbody>
-                </table>
+                <form onSubmit={this.handleSubmitEditForm}>
+                    <table className={'base-product-table'}>
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>kcal</th>
+                            <th>proteins</th>
+                            <th>fats</th>
+                            <th>carbs</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            baseProducts.length ?
+                                baseProducts.map(product => {
+                                    return (
+                                        <Fragment>
+                                            {
+                                                editBaseProductId === product.id ?
+                                                    <BaseProductRowEditable
+                                                        editFormData={this.state.editFormData}
+                                                        handleCancelClick={this.handleCancelClick}
+                                                    /> :
+                                                    <BaseProductRowReadOnly
+                                                        key={product.id}
+                                                        product={product}
+                                                        handleEditClick={this.handleEditClick}
+                                                    />
+                                            }
+                                        </Fragment>
+                                    )
+                                }) :
+                                null
+                        }
+                        </tbody>
+                    </table>
+                </form>
                 { errorMsg ? <div>{errorMsg}</div> : null}
             </div>
         );

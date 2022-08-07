@@ -24,6 +24,7 @@ class BaseProductRowEditable extends Component {
                     <input type='text' required='required' name='carbs' value={editFormData.carbs}/>
                 </td>
                 <td className={'width-20'}>
+                    <button type='submit'>Save</button>
                     <button type='button' onClick={handleCancelClick}>Cancel</button>
                 </td>
             </tr>
