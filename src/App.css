@@ -51,6 +51,12 @@
   border: 1px solid lightgray;
 }
 
+.base-product-table tbody td input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
 .width-10 {
   width: 10%;
 }
