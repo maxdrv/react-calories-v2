@@ -37,6 +37,22 @@
   }
 }
 
+.base-product-form-add {
+  width: 70em;
+  margin: 25px auto;
+}
+
+.base-product-form-add span {
+  display: inline-block;
+}
+
+.base-product-form-add input,
+.base-product-form-add button {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
 .base-product-table {
   border-collapse: collapse;
   border: 1px solid lightgray;
@@ -63,6 +79,10 @@
 
 .width-15 {
   width: 15%;
+}
+
+.width-20 {
+  width: 20%;
 }
 
 .width-30 {

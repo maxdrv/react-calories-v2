@@ -172,14 +172,29 @@ class BaseProductPage extends Component {
         const {baseProducts, errorMsg, editBaseProductId, addFormData} = this.state;
         return (
             <div>
-                <div>
+                <div className={'base-product-form-add'}>
                     <form onSubmit={this.handleSubmitAddForm}>
-                        <input type='text' name='name' value={addFormData.name} onChange={this.handleAddFormChange}/>
-                        <input type='text' name='kcal' value={addFormData.kcal} onChange={this.handleAddFormChange}/>
-                        <input type='text' name='proteins' value={addFormData.proteins} onChange={this.handleAddFormChange}/>
-                        <input type='text' name='fats' value={addFormData.fats} onChange={this.handleAddFormChange}/>
-                        <input type='text' name='carbs' value={addFormData.carbs} onChange={this.handleAddFormChange}/>
-                        <button type='submit'>Submit</button>
+                            <span className={'width-10'}>
+
+                            </span>
+                            <span className={'width-30'}>
+                                <input type='text' name='name' value={addFormData.name} onChange={this.handleAddFormChange}/>
+                            </span>
+                            <span className={'width-10'}>
+                                <input type='text' name='kcal' value={addFormData.kcal} onChange={this.handleAddFormChange}/>
+                            </span>
+                            <span className={'width-10'}>
+                                <input type='text' name='proteins' value={addFormData.proteins} onChange={this.handleAddFormChange}/>
+                            </span>
+                            <span className={'width-10'}>
+                                <input type='text' name='fats' value={addFormData.fats} onChange={this.handleAddFormChange}/>
+                            </span>
+                            <span className={'width-10'}>
+                                <input type='text' name='carbs' value={addFormData.carbs} onChange={this.handleAddFormChange}/>
+                            </span>
+                            <span className={'width-20'}>
+                                <button type='submit'>Add</button>
+                            </span>
                     </form>
                 </div>
                 <form onSubmit={this.handleSubmitEditForm}>
@@ -222,7 +237,7 @@ class BaseProductPage extends Component {
                         </tbody>
                     </table>
                 </form>
-                { errorMsg ? <div>{errorMsg}</div> : null}
+                {errorMsg ? <div>{errorMsg}</div> : null}
             </div>
         );
     }
