@@ -53,6 +53,10 @@
   height: 100%;
 }
 
+.base-product-filter {
+
+}
+
 .base-product-table {
   border-collapse: collapse;
   border: 1px solid lightgray;

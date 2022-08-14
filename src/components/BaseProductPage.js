@@ -28,12 +28,19 @@ class BaseProductPage extends Component {
                 proteins: 0,
                 fats: 0,
                 carbs: 0
+            },
+            filter: {
+                name: ""
             }
         }
     }
 
     componentDidMount() {
-        axios.get(this.path)
+        const nameFilter = this.state.filter.name
+
+        const appendPath = nameFilter ? `?name=${nameFilter}` : ""
+
+        axios.get(this.path + appendPath)
             .then(response => {
                 this.setState({
                     baseProducts: response.data.content
@@ -82,6 +89,18 @@ class BaseProductPage extends Component {
 
         this.setState(prevState => {
             prevState.addFormData[fieldName] = fieldValue;
+            return prevState;
+        });
+    }
+
+    handleFilterChange = (event) => {
+        event.preventDefault();
+
+        const fieldName = event.target.name
+        const fieldValue = event.target.value
+
+        this.setState(prevState => {
+            prevState.filter[fieldName] = fieldValue;
             return prevState;
         });
     }
@@ -196,6 +215,9 @@ class BaseProductPage extends Component {
                                 <button type='submit'>Add</button>
                             </span>
                     </form>
+                </div>
+                <div className={'base-product-filter'}>
+                    <input type='text' name='name' placeholder='name' onChange={this.handleFilterChange}/>
                 </div>
                 <form onSubmit={this.handleSubmitEditForm}>
                     <table className={'base-product-table'}>
