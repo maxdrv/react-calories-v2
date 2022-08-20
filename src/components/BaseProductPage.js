@@ -7,24 +7,40 @@ import BaseProductAddForm from "./BaseProductAddForm";
 const BaseProductPage = (props) => {
     const path = "http://localhost:8080/baseProducts"
 
-    const [baseProductList, setBaseProductList] = useState([])
     const [filter, setFilter] = useState({name: ''})
     const [errorMsg, setErrorMsg] = useState('')
     const [editBaseProductId, setEditBaseProductId] = useState(null)
     const [editFormData, setEditFormData] = useState({})
+    const [pageable, setPageable] = useState({page: 0, size: 25})
+    const [page, setPage] = useState({
+        size: 0,
+        number: 0,
+        totalElements: 0,
+        totalPages: 0,
+        content: []
+    })
 
     useEffect(() => {
-        const appendPath = filter.name ? `?name=${filter.name}` : ''
-        axios.get(path + appendPath)
+        const pathParams = []
+
+        if (filter.name) {
+            pathParams.push({name: 'name', value: filter.name})
+        }
+        pathParams.push({name: 'page', value: pageable.page})
+        pathParams.push({name: 'size', value: pageable.size})
+
+        const appendPath = pathParams.map(pathParam => `${pathParam.name}=${pathParam.value}`).join('&')
+
+        axios.get(path + '?' + appendPath)
             .then(response => {
                 console.log(response)
-                setBaseProductList(response.data.content)
+                setPage(response.data)
             })
             .catch(error => {
                 console.log(error)
                 setErrorMsg('Error while fetching data')
             })
-    }, [filter])
+    }, [filter, pageable])
 
     const handleFilterChange = (event) => {
         event.preventDefault()
@@ -125,8 +141,8 @@ const BaseProductPage = (props) => {
                     </thead>
                     <tbody>
                     {
-                        baseProductList.length ?
-                            baseProductList.map(product => {
+                        page.content.length ?
+                            page.content.map(product => {
                                 return (
                                     <Fragment key={product.id}>
                                         {
