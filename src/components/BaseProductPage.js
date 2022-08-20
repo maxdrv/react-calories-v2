@@ -3,6 +3,7 @@ import axios from "axios";
 import BaseProductRowReadOnly from "./BaseProductRowReadOnly";
 import BaseProductRowEditable from "./BaseProductRowEditable";
 import BaseProductAddForm from "./BaseProductAddForm";
+import BaseProductPagination from "./BaseProductPagination";
 
 const BaseProductPage = (props) => {
     const path = "http://localhost:8080/baseProducts"
@@ -167,6 +168,7 @@ const BaseProductPage = (props) => {
                 </table>
             </form>
             {errorMsg ? <div>{errorMsg}</div> : null}
+            <BaseProductPagination page={page} pageable={pageable} setPageable={setPageable}/>
         </div>
     )
 }
