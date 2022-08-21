@@ -3,6 +3,8 @@ import axios from "axios";
 import BaseProductRowReadOnly from "./BaseProductRowReadOnly";
 import BaseProductRowEditable from "./BaseProductRowEditable";
 import BaseProductAddForm from "./BaseProductAddForm";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleRight, faAngleLeft} from "@fortawesome/free-solid-svg-icons"
 
 const BaseProductPage = (props) => {
     const path = "http://localhost:8080/baseProducts"
@@ -141,14 +143,22 @@ const BaseProductPage = (props) => {
         setPageable({...pageable, page: page.number + 1})
     }
 
-    paginationLi.push(<li key={-1} className="btn prev" onClick={onClickPrevHandler}><span><i className="fas fa-angle-left"></i> Prev</span></li>)
+    paginationLi.push(
+        <li key={-1} className="btn prev" onClick={onClickPrevHandler}>
+            <span><FontAwesomeIcon icon={faAngleLeft}/> Prev</span>
+        </li>
+    )
 
     for (let i = 0; i < page.totalPages; i++) {
         const activeLi = i === page.number ? 'active' : ''
         paginationLi.push(<li key={i} className={`numb ${activeLi}`} onClick={() => onClickPageNumberHandler(i)}><span>{i + 1}</span></li>)
     }
 
-    paginationLi.push(<li key={page.totalPages} className="btn next" onClick={onClickNextHandler}><span>Next <i className="fas fa-angle-right"></i></span></li>)
+    paginationLi.push(
+        <li key={page.totalPages} className="btn next" onClick={onClickNextHandler}>
+            <span>Next <FontAwesomeIcon icon={faAngleRight}/></span>
+        </li>
+    )
 
     return (
         <div>
