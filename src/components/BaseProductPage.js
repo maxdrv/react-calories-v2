@@ -3,7 +3,6 @@ import axios from "axios";
 import BaseProductRowReadOnly from "./BaseProductRowReadOnly";
 import BaseProductRowEditable from "./BaseProductRowEditable";
 import BaseProductAddForm from "./BaseProductAddForm";
-import BaseProductPagination from "./BaseProductPagination";
 
 const BaseProductPage = (props) => {
     const path = "http://localhost:8080/baseProducts"
@@ -121,6 +120,36 @@ const BaseProductPage = (props) => {
         window.location.reload();
     }
 
+    // pagination
+    const paginationLi = [];
+
+    const onClickPageNumberHandler = (pageNumber) => {
+        setPageable({...pageable, page: pageNumber})
+    }
+
+    const onClickPrevHandler = () => {
+        if (page.number === 0) {
+            return
+        }
+        setPageable({...pageable, page: page.number - 1})
+    }
+
+    const onClickNextHandler = () => {
+        if (page.number === page.totalPages - 1) {
+            return
+        }
+        setPageable({...pageable, page: page.number + 1})
+    }
+
+    paginationLi.push(<li key={-1} className="btn prev" onClick={onClickPrevHandler}><span><i className="fas fa-angle-left"></i> Prev</span></li>)
+
+    for (let i = 0; i < page.totalPages; i++) {
+        const activeLi = i === page.number ? 'active' : ''
+        paginationLi.push(<li key={i} className={`numb ${activeLi}`} onClick={() => onClickPageNumberHandler(i)}><span>{i + 1}</span></li>)
+    }
+
+    paginationLi.push(<li key={page.totalPages} className="btn next" onClick={onClickNextHandler}><span>Next <i className="fas fa-angle-right"></i></span></li>)
+
     return (
         <div>
             <BaseProductAddForm path={path}/>
@@ -168,7 +197,14 @@ const BaseProductPage = (props) => {
                 </table>
             </form>
             {errorMsg ? <div>{errorMsg}</div> : null}
-            <BaseProductPagination page={page} pageable={pageable} setPageable={setPageable}/>
+
+            <div className={'base-product-pagination'}>
+                <ul>
+                    {
+                        paginationLi
+                    }
+                </ul>
+            </div>
         </div>
     )
 }
