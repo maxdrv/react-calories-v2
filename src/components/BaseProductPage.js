@@ -14,6 +14,7 @@ const BaseProductPage = (props) => {
     const [editBaseProductId, setEditBaseProductId] = useState(null)
     const [editFormData, setEditFormData] = useState({})
     const [pageable, setPageable] = useState({page: 0, size: 25})
+    const [sortable, setSortable] = useState({})
     const [page, setPage] = useState({
         size: 0,
         number: 0,
@@ -31,7 +32,11 @@ const BaseProductPage = (props) => {
         pathParams.push({name: 'page', value: pageable.page})
         pathParams.push({name: 'size', value: pageable.size})
 
-        const appendPath = pathParams.map(pathParam => `${pathParam.name}=${pathParam.value}`).join('&')
+        if (sortable && sortable.direction != null) {
+            pathParams.push({name: 'sort', value: `${sortable.name},${sortable.direction}`})
+        }
+
+        const appendPath = pathParams.map(pathParam => `${pathParam.name}=${pathParam.value}`).join('&');
 
         axios.get(path + '?' + appendPath)
             .then(response => {
@@ -42,7 +47,7 @@ const BaseProductPage = (props) => {
                 console.log(error)
                 setErrorMsg('Error while fetching data')
             })
-    }, [filter, pageable])
+    }, [filter, pageable, sortable])
 
     const handleFilterChange = (event) => {
         event.preventDefault()
@@ -160,6 +165,41 @@ const BaseProductPage = (props) => {
         </li>
     )
 
+    // sorting
+    const onClickSortHandler = (event, column) => {
+        event.preventDefault()
+        if (sortable.name === column) {
+            setSortable({name: sortable.name, direction: nextSortOrder(sortable.direction)})
+        } else {
+            setSortable({name: column, direction: 'asc'})
+        }
+    }
+
+    const nextSortOrder = (current) => {
+        if (current === 'asc') {
+            return 'desc'
+        }
+        if (current === 'desc') {
+            return null
+        }
+        if (current === null) {
+            return 'asc'
+        }
+    }
+
+    const inferStyle = (column) => {
+        if (column !== sortable.name) {
+            return 'th-sort-neutral'
+        }
+        if (sortable.direction === 'asc') {
+            return 'th-sort-asc'
+        }
+        if (sortable.direction === 'desc') {
+            return 'th-sort-desc'
+        }
+        return 'th-sort-neutral'
+    }
+
     return (
         <div>
             <BaseProductAddForm path={path}/>
@@ -170,8 +210,8 @@ const BaseProductPage = (props) => {
                 <table className={'base-product-table'}>
                     <thead>
                     <tr>
-                        <th>id</th>
-                        <th>name</th>
+                        <th className={`sortable ${inferStyle('id')}`} onClick={(event) => onClickSortHandler(event, 'id')}>id</th>
+                        <th className={`sortable ${inferStyle('name')}`} onClick={(event) => onClickSortHandler(event, 'name')}>name</th>
                         <th>kcal</th>
                         <th>proteins</th>
                         <th>fats</th>
